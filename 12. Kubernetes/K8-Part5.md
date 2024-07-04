@@ -101,6 +101,8 @@ spec:
 ```
 
 For the above yaml file we can access the application in both worker nodes. Because we haven't tainted any of the node.
+
+#Example
 ---
 apiVersion: apps/v1
 kind: Deployment
