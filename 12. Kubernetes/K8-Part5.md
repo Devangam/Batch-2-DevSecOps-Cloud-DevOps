@@ -100,6 +100,53 @@ spec:
   type: NodePort
 ```
 
+For the above yaml file we can access the application in both worker nodes. Because we haven't tainted any of the node.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-k8s-deployment
+spec:
+  selector:
+    matchLabels:
+      app: spring-boot-k8s
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: spring-boot-k8s
+    spec:
+      containers:
+        - name: spring-boot-k8s
+          image: adijaiswal/shopping-cart:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8070
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: database
+          effect: NoSchedule
+        - nodeSelector: null
+          kubernetes.io/hostname: ip-172-31-7-180
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-k8ssvc
+spec:
+  selector:
+    app: spring-boot-k8s
+  ports:
+    - protocol: TCP
+      port: 8070
+      targetPort: 8070
+  type: NodePort
+
+For this yaml file we have tained the worker node1. so the application will be accessible only on worker node1. we cannot access the application through worker node2
+                           
+
 # Liveness & Readiness Probe
 
 Liveness and readiness probes are crucial for Kubernetes to ensure the health and availability of your application. Here's a detailed explanation with examples:
