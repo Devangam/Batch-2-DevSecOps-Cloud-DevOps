@@ -31,7 +31,7 @@ Follow the Helm installation guide: [Helm Installation](https://helm.sh/docs/int
 ```bash
 helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
   -n kube-system \
-  --set clusterName=my-eks5 \
+  --set clusterName=my-eks5 \  # provide our created EKS cluster name
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller \
   --set region=ap-south-1 \
