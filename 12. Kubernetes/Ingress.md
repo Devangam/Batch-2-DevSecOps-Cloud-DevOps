@@ -27,7 +27,13 @@ This script creates an IAM service account named `aws-load-balancer-controller` 
 ### Step 3: Install Helm
 Follow the Helm installation guide: [Helm Installation](https://helm.sh/docs/intro/install/)
 
-### Step 4: Install AWS Load Balancer Controller using Helm
+### Step 4: Add helm repo
+helm repo add eks https://github.com/aws/eks-charts 
+
+### Step 5: Update the helm repo
+heml repo update
+
+### Step 6: Install AWS Load Balancer Controller using Helm
 ```bash
 helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
   -n kube-system \
@@ -35,11 +41,11 @@ helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-contro
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller \
   --set region=ap-south-1 \
-  --set vpcId=vpc-0dfe95ede3b0a9984
+  --set vpcId=vpc-0dfe95ede3b0a9984 #change the VPC ID. Click on any Instance created via EKS cluster --> click on vpc --> Copy the VPC ID created via EKS Cluster
 ```
 This Helm command installs the AWS Load Balancer Controller on the EKS cluster. It specifies configuration options such as the cluster name, service account settings, AWS region, and VPC ID.
 
-### Step 5: Create Ingress Class
+### Step 7: Create Ingress Class
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: IngressClass
@@ -51,8 +57,11 @@ spec:
   controller: ingress.k8s.aws/alb
 ```
 This YAML file defines an IngressClass resource named `my-aws-ingress-class` with annotations specifying it as the default class for ALB.
+kubectl apply -f <ingress class yaml filename>
 
-### Step 6: Create Ingress Rules
+###Step 8: create deployment file
+
+### Step 8: Create Ingress Rules
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
