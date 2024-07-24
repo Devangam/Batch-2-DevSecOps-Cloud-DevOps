@@ -28,7 +28,7 @@ This script creates an IAM service account named `aws-load-balancer-controller` 
 Follow the Helm installation guide: [Helm Installation](https://helm.sh/docs/intro/install/)
 
 ### Step 4: Add helm repo
-helm repo add eks https://github.com/aws/eks-charts 
+helm repo add eks https://aws.github.io/eks-charts 
 
 ### Step 5: Update the helm repo
 heml repo update
