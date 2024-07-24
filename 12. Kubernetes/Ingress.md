@@ -86,7 +86,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: frontend
+                name: frontend #provide the service name that is in deployment file (ingress-deployment.yml)
                 port: 
                   number: 80
 ```
